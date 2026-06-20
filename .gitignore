@@ -1,0 +1,11 @@
+# Hearthglow website — .gitignore
+# CRITICAL: never commit credentials or backups to a public repo
+
+scripts/config.sh
+backups/
+logs/
+*.log
+.DS_Store
+Thumbs.db
+*.env
+secrets.*

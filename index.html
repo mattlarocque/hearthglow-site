@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hearthglow — Christmas Light Installation | Kitchener-Waterloo</title>
+  <meta name="description" content="Professional Christmas light installation for Kitchener-Waterloo homes. Three service tiers: labour-only, full supply and install, and premium aerial reel. Request a quote today." />
+  <meta name="theme-color" content="#1B3A5C" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset & base ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0D1F35;
+      color: #E8DCC8;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Tokens ────────────────────────────────────────────────── */
+    :root {
+      --navy:    #1B3A5C;
+      --navy-dk: #0D1F35;
+      --navy-lt: #264D7A;
+      --gold:    #C9A84C;
+      --gold-lt: #E0C070;
+      --cream:   #F5ECD7;
+      --warm:    #E8DCC8;
+      --muted:   #8CA5BE;
+      --glow-r:  rgba(201,168,76,0.18);
+      --glow-b:  rgba(100,160,230,0.10);
+      --radius:  12px;
+      --radius-lg: 20px;
+      --shadow:  0 4px 32px rgba(0,0,0,0.4);
+      --max: 1120px;
+    }
+
+    /* ── Utilities ─────────────────────────────────────────────── */
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    .sr-only { position: absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
+    .text-gold  { color: var(--gold); }
+    .text-muted { color: var(--muted); }
+
+    /* ── Buttons ───────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      text-decoration: none;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy-dk);
+      box-shadow: 0 0 24px rgba(201,168,76,0.4);
+    }
+    .btn-primary:hover { background: var(--gold-lt); box-shadow: 0 0 36px rgba(201,168,76,0.55); }
+    .btn-outline {
+      background: transparent;
+      color: var(--cream);
+      border: 2px solid rgba(232,220,200,0.35);
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-lg { padding: 16px 36px; font-size: 1.05rem; }
+
+    /* ── NAV ───────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 24px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.3s, backdrop-filter 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(13,31,53,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--cream);
+      letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--cream); }
+    .nav-cta { margin-left: 8px; }
+
+    /* Mobile nav toggle */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--cream);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    /* ── HERO ──────────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 120px 24px 80px;
+      background-image: url('images/hero-bg.png');
+      background-size: cover;
+      background-position: center center;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(13,31,53,0.88) 0%,
+        rgba(13,31,53,0.70) 55%,
+        rgba(13,31,53,0.45) 100%
+      );
+      z-index: 1;
+    }
+
+    /* Bokeh lights background */
+    .bokeh {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .bokeh-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0;
+      animation: float-in 2s ease forwards;
+    }
+    @keyframes float-in {
+      to { opacity: 1; }
+    }
+    @keyframes pulse-orb {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.15); opacity: 1; }
+    }
+
+    /* String lights */
+    .lights-bar {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 8px;
+      display: flex;
+      align-items: flex-start;
+      padding: 0 8px;
+      overflow: hidden;
+      z-index: 3;
+    }
+    .lights-wire {
+      position: absolute;
+      top: 3px; left: 0; right: 0;
+      height: 2px;
+      background: rgba(100,80,40,0.6);
+    }
+    .bulb {
+      flex-shrink: 0;
+      width: 8px; height: 12px;
+      border-radius: 2px 2px 50% 50%;
+      margin: 0 22px;
+      position: relative;
+      top: 2px;
+      animation: twinkle 3s infinite;
+    }
+    @keyframes twinkle {
+      0%, 90%, 100% { opacity: 1; }
+      95% { opacity: 0.3; }
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: var(--max);
+      margin: 0 auto;
+      width: 100%;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px; height: 1px;
+      background: var(--gold);
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 6vw, 4.4rem);
+      font-weight: 700;
+      line-height: 1.12;
+      color: var(--cream);
+      margin-bottom: 24px;
+      max-width: 720px;
+    }
+    h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .hero-proof {
+      margin-top: 60px;
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .proof-item {
+      display: flex;
+      flex-direction: column;
+    }
+    .proof-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .proof-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .proof-divider {
+      width: 1px;
+      background: rgba(201,168,76,0.2);
+      align-self: stretch;
+    }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+    }
+    .scroll-hint svg { width: 20px; height: 20px; }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ── SECTION SHARED ────────────────────────────────────────── */
+    section { padding: 96px 24px; }
+    .section-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+    .section-header { margin-bottom: 56px; }
+
+    /* ── WHY HEARTHGLOW ────────────────────────────────────────── */
+    #why { background: var(--navy); }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 32px;
+    }
+    .why-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: var(--radius-lg);
+      padding: 36px 28px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .why-card:hover {
+      border-color: rgba(201,168,76,0.4);
+      transform: translateY(-4px);
+    }
+    .why-icon {
+      width: 48px; height: 48px;
+      background: rgba(201,168,76,0.1);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+    }
+    .why-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--cream);
+      margin-bottom: 10px;
+    }
+    .why-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── TIERS ─────────────────────────────────────────────────── */
+    #tiers { background: var(--navy-dk); }
+    .tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+      align-items: start;
+    }
+    .tier-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      position: relative;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .tier-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+    }
+    .tier-card.featured {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.06);
+      box-shadow: 0 0 60px rgba(201,168,76,0.12);
+    }
+    .tier-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: var(--navy-dk);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 16px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .tier-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 4px;
+    }
+    .tier-tagline {
+      font-size: 0.85rem;
+      color: var(--gold);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      margin-bottom: 20px;
+    }
+    .tier-desc {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .tier-features { list-style: none; margin-bottom: 32px; }
+    .tier-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: var(--warm);
+      padding: 6px 0;
+      line-height: 1.5;
+    }
+    .tier-features li::before {
+      content: '✦';
+      color: var(--gold);
+      font-size: 0.65rem;
+      margin-top: 4px;
+      flex-shrink: 0;
+    }
+    .tier-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .tier-price strong {
+      font-size: 1.1rem;
+      color: var(--cream);
+    }
+
+    /* ── HOW IT WORKS ──────────────────────────────────────────── */
+    #how { background: var(--navy); }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0;
+      position: relative;
+    }
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 32px;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3) 20%, rgba(201,168,76,0.3) 80%, transparent);
+    }
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 16px;
+      position: relative;
+    }
+    .step-num {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.1);
+      border: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 16px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+      background: var(--navy);
+    }
+    .step h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 8px;
+    }
+    .step p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── THE REVEAL ────────────────────────────────────────────── */
+    #reveal {
+      background: var(--navy-dk);
+      position: relative;
+      overflow: hidden;
+    }
+    .reveal-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+    .reveal-glow {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .reveal-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: var(--cream);
+      line-height: 1.5;
+      position: relative;
+      padding-left: 32px;
+    }
+    .reveal-quote::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 4px;
+      bottom: 4px;
+      width: 4px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+    .reveal-quote em {
+      font-style: normal;
+      color: var(--gold);
+    }
+    blockquote {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-top: 24px;
+      padding-left: 32px;
+      font-style: italic;
+    }
+
+    /* ── QUOTE FORM ────────────────────────────────────────────── */
+    #quote {
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+    }
+    #quote::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .form-wrapper {
+      max-width: 680px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      position: relative;
+      z-index: 1;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .form-group.full { grid-column: 1 / -1; }
+    label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--cream);
+      letter-spacing: 0.04em;
+    }
+    input, select, textarea {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.92rem;
+      color: var(--cream);
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      -webkit-appearance: none;
+    }
+    input::placeholder, textarea::placeholder { color: rgba(140,165,190,0.6); }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.06);
+    }
+    select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238CA5BE' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+    }
+    select option { background: #1B3A5C; color: var(--cream); }
+    textarea { resize: vertical; min-height: 100px; }
+    .form-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+    .form-submit { width: 100%; justify-content: center; }
+
+    /* Form success state */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 40px 0;
+    }
+    .form-success .success-icon {
+      width: 64px; height: 64px;
+      background: rgba(201,168,76,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 1.8rem;
+    }
+    .form-success h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--cream);
+      margin-bottom: 12px;
+    }
+    .form-success p { color: var(--muted); font-size: 0.92rem; }
+
+    /* ── FOOTER ────────────────────────────────────────────────── */
+    footer {
+      background: var(--navy-dk);
+      border-top: 1px solid rgba(201,168,76,0.12);
+      padding: 48px 24px;
+    }
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--cream);
+    }
+    .footer-logo span { color: var(--gold); }
+    .footer-contact {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .footer-contact a {
+      color: var(--gold);
+      transition: color 0.2s;
+    }
+    .footer-contact a:hover { color: var(--gold-lt); }
+    .footer-copy {
+      font-size: 0.8rem;
+      color: rgba(140,165,190,0.5);
+      width: 100%;
+      text-align: center;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    /* ── RESPONSIVE ────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        inset: 68px 0 0;
+        background: rgba(13,31,53,0.97);
+        backdrop-filter: blur(12px);
+        padding: 40px 24px;
+        gap: 24px;
+        z-index: 99;
+        align-items: flex-start;
+      }
+      .nav-links.open a { font-size: 1.2rem; color: var(--cream); }
+      .nav-links.open .nav-cta { margin: 0; }
+      .nav-links.open .btn { width: 100%; justify-content: center; }
+      .nav-toggle { display: flex; }
+      .steps::before { display: none; }
+      .steps { grid-template-columns: 1fr; gap: 32px; }
+      .step { flex-direction: row; text-align: left; gap: 20px; }
+      .step-num { flex-shrink: 0; }
+      .reveal-inner { grid-template-columns: 1fr; gap: 40px; }
+      .form-wrapper { padding: 28px 20px; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-proof { gap: 20px; }
+      .proof-divider { display: none; }
+    }
+    @media (max-width: 480px) {
+      h1 { font-size: 2.2rem; }
+      section { padding: 72px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ─────────────────────────────────────────────────────── -->
+  <nav id="nav" aria-label="Main navigation">
+    <a href="#hero" class="nav-logo">Hearth<span>glow</span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks" role="list">
+      <li><a href="#why">Why Hearthglow</a></li>
+      <li><a href="#tiers">Services</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li class="nav-cta"><a href="#quote" class="btn btn-primary">Get a Quote</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── HERO ────────────────────────────────────────────────────── -->
+  <section id="hero" aria-label="Hero">
+
+    <!-- String lights bar -->
+    <div class="lights-bar" aria-hidden="true">
+      <div class="lights-wire"></div>
+      <!-- Bulbs generated by JS below -->
+    </div>
+
+    <!-- Bokeh orbs -->
+    <div class="bokeh" aria-hidden="true" id="bokeh"></div>
+
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Kitchener-Waterloo Region</p>
+      <h1>Your home, lit<br/><em>the way it deserves.</em></h1>
+      <p class="hero-sub">
+        Professional Christmas light installation by a single dedicated professional. Commercial-grade LEDs, personal service, and a
+        seamless experience from quote to teardown.
+      </p>
+      <div class="hero-actions">
+        <a href="#quote" class="btn btn-primary btn-lg">Request a Quote</a>
+        <a href="#tiers" class="btn btn-outline btn-lg">See Services</a>
+      </div>
+
+      <div class="hero-proof" role="list">
+        <div class="proof-item" role="listitem">
+          <span class="proof-num">KW</span>
+          <span class="proof-label">Kitchener-Waterloo<br/>& surrounding area</span>
+        </div>
+        <div class="proof-divider" aria-hidden="true"></div>
+        <div class="proof-item" role="listitem">
+          <span class="proof-num">$2M</span>
+          <span class="proof-label">Commercial general<br/>liability insurance</span>
+        </div>
+        <div class="proof-divider" aria-hidden="true"></div>
+        <div class="proof-item" role="listitem">
+          <span class="proof-num">3</span>
+          <span class="proof-label">Service tiers to<br/>fit every home</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M6 9l6 6 6-6"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ── WHY HEARTHGLOW ──────────────────────────────────────────── -->
+  <section id="why" aria-labelledby="why-title">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Why Hearthglow</p>
+        <h2 class="section-title" id="why-title">Christmas lights done right.</h2>
+        <p class="section-sub">Hearthglow is a personal service, not a franchise. You work directly with Matthew — from the first message to the final teardown.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon" aria-hidden="true">✦</div>
+          <h3>Personal service</h3>
+          <p>You work directly with Matthew — the owner, the installer, and your point of contact. No crews, no call centres, no hand-offs.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon" aria-hidden="true">💡</div>
+          <h3>Commercial-grade lights</h3>
+          <p>Hearthglow sources professional C9 LED warm white strands — not what's on the shelf at Canadian Tire. Brighter, longer-lasting, better looking.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon" aria-hidden="true">🎬</div>
+          <h3>Aerial drone reel</h3>
+          <p>The Merry tier includes a 30-second and 60-second drone reel of your home, shot at blue hour. The only Christmas light service in KW that offers this.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon" aria-hidden="true">🛡️</div>
+          <h3>Fully insured</h3>
+          <p>$2M commercial general liability on every job. Installed by a trained professional who takes the work seriously.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TIERS ────────────────────────────────────────────────────── -->
+  <section id="tiers" aria-labelledby="tiers-title">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Services</p>
+        <h2 class="section-title" id="tiers-title">Three ways to light up your home.</h2>
+        <p class="section-sub">Choose the level of service that fits your home and your season. All tiers include teardown in January.</p>
+      </div>
+      <div class="tiers-grid">
+
+        <!-- Home -->
+        <div class="tier-card">
+          <div class="tier-name">Home</div>
+          <div class="tier-tagline">Labour only</div>
+          <p class="tier-desc">
+            You supply the lights — Matthew does the install. Perfect for clients who already own lights they love and want them hung professionally every year.
+          </p>
+          <ul class="tier-features">
+            <li>Professional installation of your lights</li>
+            <li>Gutter clips, fasteners, and extension cords supplied by Hearthglow</li>
+            <li>January teardown included</li>
+            <li>Personalised service — Matthew installs everything himself</li>
+          </ul>
+          <p class="tier-price">Pricing varies by property size. <strong>Request a quote.</strong></p>
+          <a href="#quote" class="btn btn-outline" style="width:100%; justify-content:center;">Get a Quote</a>
+        </div>
+
+        <!-- Bright (featured) -->
+        <div class="tier-card featured">
+          <div class="tier-badge">Most popular</div>
+          <div class="tier-name">Bright</div>
+          <div class="tier-tagline">Full supply + install</div>
+          <p class="tier-desc">
+            The full Hearthglow experience. Matthew supplies everything: commercial-grade C9 LED warm white strands, all hardware, and a programmable timer. You supply nothing — we handle it all.
+          </p>
+          <ul class="tier-features">
+            <li>Commercial C9 LED warm white strands (not available at retail)</li>
+            <li>All clips, cords, and extension hardware</li>
+            <li>Programmable outdoor timer included</li>
+            <li>Professional install and January teardown</li>
+            <li>Lights stored by Hearthglow between seasons</li>
+          </ul>
+          <p class="tier-price">Pricing varies by property size. <strong>Request a quote.</strong></p>
+          <a href="#quote" class="btn btn-primary" style="width:100%; justify-content:center;">Get a Quote</a>
+        </div>
+
+        <!-- Merry -->
+        <div class="tier-card">
+          <div class="tier-name">Merry</div>
+          <div class="tier-tagline">Bright + aerial reel</div>
+          <p class="tier-desc">
+            Everything in Bright, plus a professionally edited drone reel of your home at blue hour — a 30-second and 60-second aerial video delivered within 48 hours of the shoot.
+          </p>
+          <ul class="tier-features">
+            <li>Everything included in Bright tier</li>
+            <li>Blue-hour aerial drone session</li>
+            <li>30s + 60s professionally edited reel delivered via private link</li>
+            <li>Ready to share — beautiful on Instagram and Facebook</li>
+            <li>The only Christmas light service in KW offering this</li>
+          </ul>
+          <p class="tier-price">Pricing varies by property size. <strong>Request a quote.</strong></p>
+          <a href="#quote" class="btn btn-outline" style="width:100%; justify-content:center;">Get a Quote</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HOW IT WORKS ─────────────────────────────────────────────── -->
+  <section id="how" aria-labelledby="how-title">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">The process</p>
+        <h2 class="section-title" id="how-title">Simple from start to finish.</h2>
+        <p class="section-sub">Six steps and you're done for the season. Matthew handles everything — all you do is show up for the reveal.</p>
+      </div>
+      <div class="steps" role="list">
+        <div class="step" role="listitem">
+          <div class="step-num" aria-hidden="true">1</div>
+          <div>
+            <h3>Request a quote</h3>
+            <p>Fill out the form below. Matthew responds within 24 hours with a custom quote for your property.</p>
+          </div>
+        </div>
+        <div class="step" role="listitem">
+          <div class="step-num" aria-hidden="true">2</div>
+          <div>
+            <h3>Book your date</h3>
+            <p>Confirm your tier and install date. A 50% deposit secures your spot on the schedule.</p>
+          </div>
+        </div>
+        <div class="step" role="listitem">
+          <div class="step-num" aria-hidden="true">3</div>
+          <div>
+            <h3>48-hour reminder</h3>
+            <p>Matthew sends a personal message the day before — confirming the window and any access details.</p>
+          </div>
+        </div>
+        <div class="step" role="listitem">
+          <div class="step-num" aria-hidden="true">4</div>
+          <div>
+            <h3>Install day</h3>
+            <p>Matthew arrives, installs everything, and invites you outside for the first look. Every time.</p>
+          </div>
+        </div>
+        <div class="step" role="listitem">
+          <div class="step-num" aria-hidden="true">5</div>
+          <div>
+            <h3>Enjoy your lights</h3>
+            <p>Sit back. Your lights are on a timer and look great. Merry tier? Your reel arrives within 48 hours.</p>
+          </div>
+        </div>
+        <div class="step" role="listitem">
+          <div class="step-num" aria-hidden="true">6</div>
+          <div>
+            <h3>January teardown</h3>
+            <p>Matthew returns in January to take everything down cleanly. Included in every tier.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── THE REVEAL ───────────────────────────────────────────────── -->
+  <section id="reveal" aria-label="The Hearthglow promise">
+    <div class="reveal-glow" aria-hidden="true"></div>
+    <div class="reveal-inner container">
+      <div>
+        <p class="section-eyebrow">The Hearthglow standard</p>
+        <h2 class="section-title">The Reveal.</h2>
+        <p class="section-sub" style="margin-bottom:0">Every Hearthglow install ends the same way — with Matthew inviting you outside for the first look at your home lit up. It's the moment the whole job is built around.</p>
+      </div>
+      <div>
+        <p class="reveal-quote">
+          "We're all finished. Would you like to come outside<br/>and take a <em>look</em>?"
+        </p>
+        <blockquote>
+          The Reveal is the last act of every Hearthglow job, without exception. It's not a formality — it's why the work matters.
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── QUOTE FORM ───────────────────────────────────────────────── -->
+  <section id="quote" aria-labelledby="quote-title">
+    <div class="container">
+      <div class="section-header" style="text-align:center; max-width:560px; margin:0 auto 48px;">
+        <p class="section-eyebrow">Get a quote</p>
+        <h2 class="section-title" id="quote-title">Book your season.</h2>
+        <p class="section-sub" style="margin:0 auto">Matthew responds within 24 hours with a custom quote for your property. No pressure, no obligation.</p>
+      </div>
+
+      <div class="form-wrapper">
+        <!-- SUCCESS STATE -->
+        <div class="form-success" id="formSuccess" role="status" aria-live="polite">
+          <div class="success-icon" aria-hidden="true">✦</div>
+          <h3>Request received</h3>
+          <p>Thanks! Matthew will be in touch within 24 hours with a quote for your home.</p>
+        </div>
+
+        <!-- FORM -->
+        <form id="quoteForm"
+              action="/contact.php"
+              method="POST"
+              novalidate>
+
+          <!-- Honeypot (spam protection) -->
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" aria-hidden="true" />
+          <input type="hidden" name="_subject" value="New Hearthglow Quote Request" />
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First name <span aria-hidden="true">*</span></label>
+              <input type="text" id="fname" name="first_name" placeholder="Sarah" required autocomplete="given-name" />
+            </div>
+            <div class="form-group">
+              <label for="lname">Last name <span aria-hidden="true">*</span></label>
+              <input type="text" id="lname" name="last_name" placeholder="Morrison" required autocomplete="family-name" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email <span aria-hidden="true">*</span></label>
+              <input type="email" id="email" name="email" placeholder="you@email.com" required autocomplete="email" />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone number</label>
+              <input type="tel" id="phone" name="phone" placeholder="519-555-0100" autocomplete="tel" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="address">Property address <span aria-hidden="true">*</span></label>
+            <input type="text" id="address" name="address" placeholder="47 Trillium Court, Kitchener, ON" required autocomplete="street-address" />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="tier">Service tier interest</label>
+              <select id="tier" name="tier_interest">
+                <option value="" disabled selected>Not sure yet</option>
+                <option value="home">Home — labour only (I supply lights)</option>
+                <option value="bright">Bright — full supply + install</option>
+                <option value="merry">Merry — Bright + aerial drone reel</option>
+                <option value="unsure">Not sure — help me choose</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="window">Preferred install window</label>
+              <select id="window" name="install_window">
+                <option value="" disabled selected>Select a time</option>
+                <option value="oct-early">Early October (Oct 1–15)</option>
+                <option value="oct-late">Late October (Oct 16–31)</option>
+                <option value="nov-early">Early November (Nov 1–15)</option>
+                <option value="nov-late">Late November (Nov 16–30)</option>
+                <option value="flexible">Flexible — Matthew's call</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="notes">Anything else Matthew should know?</label>
+            <textarea id="notes" name="notes" placeholder="Gate code, dog in yard, tricky roofline, special requests…"></textarea>
+          </div>
+
+          <p class="form-note">
+            By submitting this form you're requesting a quote — not making a booking. Matthew will reach out within 24 hours.
+          </p>
+
+          <button type="submit" class="btn btn-primary btn-lg form-submit">
+            Send Quote Request
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ───────────────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-inner container">
+      <div class="footer-logo">Hearth<span>glow</span></div>
+      <div class="footer-contact">
+        Questions? Email&nbsp;
+        <a href="mailto:matt@hearthglow.ca">matt@hearthglow.ca</a>
+        &nbsp;— Matthew responds personally.
+      </div>
+      <p class="footer-copy">
+        © 2026 Hearthglow — Matthew LaRocque · Petersburg, ON · Serving Kitchener-Waterloo
+      </p>
+    </div>
+  </footer>
+
+
+  <!-- ── SCRIPTS ──────────────────────────────────────────────────── -->
+  <script>
+    // ── Nav scroll effect ─────────────────────────────────────────
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 30);
+    }, { passive: true });
+
+    // ── Mobile nav toggle ─────────────────────────────────────────
+    const toggle = document.getElementById('navToggle');
+    const links  = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+    links.querySelectorAll('a').forEach(a =>
+      a.addEventListener('click', () => {
+        links.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      })
+    );
+
+    // ── Bokeh background ──────────────────────────────────────────
+    (function buildBokeh() {
+      const container = document.getElementById('bokeh');
+      const colours = [
+        'rgba(201,168,76,0.55)',  // gold
+        'rgba(240,120,50,0.40)',  // amber
+        'rgba(80,140,220,0.35)',  // cold blue
+        'rgba(201,168,76,0.35)',  // soft gold
+        'rgba(255,200,80,0.45)',  // warm yellow
+        'rgba(120,60,220,0.20)',  // deep purple
+      ];
+      const orbs = [
+        { x: 15, y: 20, r: 280, c: 0, delay: 0,    dur: 8 },
+        { x: 72, y: 55, r: 320, c: 1, delay: 0.5,  dur: 10 },
+        { x: 45, y: 80, r: 220, c: 2, delay: 1,    dur: 12 },
+        { x: 85, y: 15, r: 200, c: 3, delay: 0.3,  dur: 9 },
+        { x: 5,  y: 70, r: 180, c: 4, delay: 0.8,  dur: 11 },
+        { x: 60, y: 30, r: 140, c: 5, delay: 1.2,  dur: 7 },
+      ];
+      orbs.forEach(o => {
+        const el = document.createElement('div');
+        el.className = 'bokeh-orb';
+        el.style.cssText = `
+          left:${o.x}%; top:${o.y}%;
+          width:${o.r}px; height:${o.r}px;
+          background:radial-gradient(circle, ${colours[o.c]} 0%, transparent 70%);
+          margin-left:-${o.r/2}px; margin-top:-${o.r/2}px;
+          animation: float-in 2s ${o.delay}s ease forwards,
+                     pulse-orb ${o.dur}s ${o.delay + 2}s ease-in-out infinite;
+        `;
+        container.appendChild(el);
+      });
+    })();
+
+    // ── String lights ─────────────────────────────────────────────
+    (function buildLights() {
+      const bar = document.querySelector('.lights-bar');
+      const colours = ['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#ff6bcd','#ffd93d','#ff6b6b','#6bcb77'];
+      const count = Math.ceil(window.innerWidth / 30);
+      for (let i = 0; i < count; i++) {
+        const b = document.createElement('div');
+        b.className = 'bulb';
+        b.style.background = colours[i % colours.length];
+        b.style.boxShadow = `0 0 6px 2px ${colours[i % colours.length]}88`;
+        b.style.animationDelay = `${(Math.random() * 4).toFixed(2)}s`;
+        b.style.animationDuration = `${(2.5 + Math.random() * 3).toFixed(2)}s`;
+        bar.appendChild(b);
+      }
+    })();
+
+    // ── Quote form: AJAX submit via Formspree ────────────────────
+    const form    = document.getElementById('quoteForm');
+    const success = document.getElementById('formSuccess');
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      // Basic validation
+      const required = form.querySelectorAll('[required]');
+      let valid = true;
+      required.forEach(field => {
+        field.style.borderColor = '';
+        if (!field.value.trim()) {
+          field.style.borderColor = '#e05555';
+          valid = false;
+        }
+      });
+      if (!valid) return;
+
+      const btn = form.querySelector('.form-submit');
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          form.style.display = 'none';
+          success.style.display = 'block';
+        } else {
+          btn.textContent = 'Send Quote Request';
+          btn.disabled = false;
+          alert('Something went wrong. Please email matt@hearthglow.ca directly.');
+        }
+      } catch {
+        btn.textContent = 'Send Quote Request';
+        btn.disabled = false;
+        alert('Network error. Please email matt@hearthglow.ca directly.');
+      }
+    });
+
+    // ── Intersection observer: fade in sections ──────────────────
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.why-card, .tier-card, .step').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>

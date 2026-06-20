@@ -1,0 +1,10 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/hearthgl/public_html
+    - /bin/cp index.html $DEPLOYPATH/index.html
+    - /bin/cp contact.php $DEPLOYPATH/contact.php
+    - /bin/mkdir -p $DEPLOYPATH/images
+    - /bin/cp -r images/. $DEPLOYPATH/images/
+    - /bin/mkdir -p $DEPLOYPATH/scripts
+    - /bin/cp -r scripts/. $DEPLOYPATH/scripts/

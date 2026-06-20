@@ -1,0 +1,56 @@
+# Hearthglow — Apache configuration
+# Managed by setup-ssl.sh — also installed automatically on deploy
+# Last updated: June 2026
+
+# ── Force HTTPS ───────────────────────────────────────────────────────────────
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ── Force www → non-www ───────────────────────────────────────────────────────
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+# ── Security headers ──────────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>
+
+# ── Protect sensitive files ───────────────────────────────────────────────────
+<FilesMatch "\.(sh|log|env|json|md|gitignore)$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+<Files "config.sh">
+  Order allow,deny
+  Deny from all
+</Files>
+
+# ── Compression ───────────────────────────────────────────────────────────────
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json text/plain
+</IfModule>
+
+# ── Browser caching ───────────────────────────────────────────────────────────
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html              "access plus 1 hour"
+  ExpiresByType text/css               "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType image/png              "access plus 1 year"
+  ExpiresByType image/jpeg             "access plus 1 year"
+  ExpiresByType image/webp             "access plus 1 year"
+  ExpiresByType image/svg+xml          "access plus 1 month"
+  ExpiresByType font/woff2             "access plus 1 year"
+</IfModule>
+
+# ── PHP error handling (production: hide errors from visitors) ─────────────────
+<IfModule mod_php.c>
+  php_flag  display_errors off
+  php_value error_log      /home/hearthgl/logs/php_errors.log
+</IfModule>
