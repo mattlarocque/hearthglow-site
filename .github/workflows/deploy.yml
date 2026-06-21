@@ -1,0 +1,15 @@
+name: Deploy to cPanel
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger cPanel Git Deploy
+        run: |
+          curl -sk -X POST "https://eos.canspace.ca:2083/execute/VersionControlDeployment/create" \
+            -H "Authorization: cpanel hearthgl:${{ secrets.CPANEL_TOKEN }}" \
+            --data "repository_root=/home/hearthgl/repositories/hearthglow-site"
