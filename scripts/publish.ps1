@@ -27,7 +27,11 @@ $filesToUpload = @(
     "images/installer.png",
     "images/home-lit-og.png",
     "images/logo-mark.png",
-    "images/child-wonder.png"
+    "images/child-wonder.png",
+    "images/why-personal.png",
+    "images/why-drone.png",
+    "images/why-insured.png",
+    "images/tier-bright.png"
 )
 
 Write-Host ""
