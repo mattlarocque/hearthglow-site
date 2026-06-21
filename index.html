@@ -20,14 +20,14 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
 
   <style>
     /* ── Reset & base ──────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; font-size: 16px; }
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Spectral', serif;
       background: #0D1F35;
       color: #E8DCC8;
       line-height: 1.65;
@@ -67,7 +67,7 @@
       gap: 8px;
       padding: 14px 28px;
       border-radius: 50px;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Spectral', serif;
       font-weight: 600;
       font-size: 0.95rem;
       cursor: pointer;
@@ -114,7 +114,8 @@
       color: var(--cream);
       letter-spacing: 0.02em;
     }
-    .nav-logo span { color: var(--gold); }
+    .nav-logo-name { color: var(--cream); }
+    .nav-logo-name span { color: var(--gold); }
     .nav-links {
       display: flex;
       align-items: center;
@@ -631,7 +632,7 @@
       border: 1px solid rgba(255,255,255,0.12);
       border-radius: 8px;
       padding: 12px 16px;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Spectral', serif;
       font-size: 0.92rem;
       color: var(--cream);
       outline: none;
@@ -840,7 +841,7 @@
 
   <!-- ── NAV ─────────────────────────────────────────────────────── -->
   <nav id="nav" aria-label="Main navigation">
-    <a href="#hero" class="nav-logo"><img src="images/logo-mark.png" alt="" class="nav-logo-img" aria-hidden="true" />Hearth<span>glow</span></a>
+    <a href="#hero" class="nav-logo"><img src="images/logo-mark.png" alt="" class="nav-logo-img" aria-hidden="true" /><span class="nav-logo-name">Hearth<span>glow</span></span></a>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
