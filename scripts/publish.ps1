@@ -4,8 +4,10 @@
 
 # Load credentials from gitignored config file
 $configPath = Join-Path $PSScriptRoot "config.ps1"
-if (Test-Path $configPath) { . $configPath } else {
-    Write-Error "Missing scripts/config.ps1 — create it with: `$CPANEL_TOKEN = 'your-token'"
+if (Test-Path $configPath) {
+    . $configPath
+} else {
+    Write-Error "Missing scripts/config.ps1 - create it with: CPANEL_TOKEN = your-token"
     exit 1
 }
 
