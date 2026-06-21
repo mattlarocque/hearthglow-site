@@ -14,7 +14,14 @@ $LOCAL_ROOT  = Split-Path -Parent $SCRIPT_DIR
 
 # Files to publish this run (paths relative to Website folder)
 $filesToUpload = @(
-    "index.html"
+    "index.html",
+    "images/reveal-couple.png",
+    "images/aerial-home.png",
+    "images/lights-detail.png",
+    "images/installer.png",
+    "images/home-lit-og.png",
+    "images/logo-mark.png",
+    "images/child-wonder.png"
 )
 
 Write-Host ""

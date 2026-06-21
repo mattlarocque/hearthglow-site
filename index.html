@@ -7,6 +7,16 @@
   <meta name="description" content="Professional Christmas light installation for Kitchener-Waterloo homes. Three service tiers: labour-only, full supply and install, and premium aerial reel. Request a quote today." />
   <meta name="theme-color" content="#1B3A5C" />
 
+  <!-- Open Graph / Social sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://hearthglow.ca/" />
+  <meta property="og:title" content="Hearthglow — Christmas Light Installation | Kitchener-Waterloo" />
+  <meta property="og:description" content="Professional Christmas light installation for Kitchener-Waterloo homes. Three service tiers: labour-only, full supply and install, and premium aerial reel." />
+  <meta property="og:image" content="https://hearthglow.ca/images/home-lit-og.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/logo-mark.png" />
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -745,13 +755,93 @@
       h1 { font-size: 2.2rem; }
       section { padding: 72px 20px; }
     }
+
+    /* ── NAV LOGO MARK ─────────────────────────────────────────── */
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo-img { width: 32px; height: 32px; border-radius: 6px; flex-shrink: 0; }
+
+    /* ── HOME-LIT IMAGE BAND ───────────────────────────────────── */
+    #img-band {
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+      height: 400px;
+    }
+    #img-band img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    #img-band::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(13,31,53,0.35) 0%,
+        transparent 25%,
+        transparent 75%,
+        rgba(13,31,53,0.45) 100%
+      );
+    }
+
+    /* ── WHY CARD IMAGE ────────────────────────────────────────── */
+    .why-card-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: var(--radius);
+      margin-bottom: 20px;
+    }
+
+    /* ── TIER CARD IMAGE ───────────────────────────────────────── */
+    .tier-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: var(--radius);
+      margin-bottom: 24px;
+    }
+
+    /* ── HOW INSTALLER IMAGE ───────────────────────────────────── */
+    .how-img-wrap {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .how-img-wrap img {
+      width: 100%;
+      max-width: 360px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      margin: 0 auto;
+    }
+
+    /* ── REVEAL IMAGE ──────────────────────────────────────────── */
+    .reveal-img {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+      object-fit: cover;
+      aspect-ratio: 1 / 1;
+    }
+
+    @media (max-width: 768px) {
+      #img-band { height: 240px; }
+      .how-img-wrap { margin-bottom: 32px; }
+      .how-img-wrap img { max-width: 280px; }
+    }
   </style>
 </head>
 <body>
 
   <!-- ── NAV ─────────────────────────────────────────────────────── -->
   <nav id="nav" aria-label="Main navigation">
-    <a href="#hero" class="nav-logo">Hearth<span>glow</span></a>
+    <a href="#hero" class="nav-logo">
+      <img src="images/logo-mark.png" alt="" class="nav-logo-img" aria-hidden="true" />
+      Hearth<span>glow</span>
+    </a>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -827,6 +917,7 @@
           <p>You work directly with Matthew — the owner, the installer, and your point of contact. No crews, no call centres, no hand-offs.</p>
         </div>
         <div class="why-card">
+          <img src="images/lights-detail.png" alt="Close-up of warm white C9 LED Christmas bulbs glowing against a dark roofline" class="why-card-img" loading="lazy" />
           <div class="why-icon" aria-hidden="true">💡</div>
           <h3>Commercial-grade lights</h3>
           <p>Hearthglow sources professional C9 LED warm white strands — not what's on the shelf at Canadian Tire. Brighter, longer-lasting, better looking.</p>
@@ -844,6 +935,11 @@
       </div>
     </div>
   </section>
+
+  <!-- ── HOME-LIT IMAGE BAND ──────────────────────────────────────── -->
+  <div id="img-band" aria-hidden="true">
+    <img src="images/home-lit-og.png" alt="" />
+  </div>
 
   <!-- ── TIERS ────────────────────────────────────────────────────── -->
   <section id="tiers" aria-labelledby="tiers-title">
@@ -893,6 +989,7 @@
 
         <!-- Merry -->
         <div class="tier-card">
+          <img src="images/aerial-home.png" alt="Aerial drone view of a Canadian home outlined in warm white Christmas lights at blue hour" class="tier-img" loading="lazy" />
           <div class="tier-name">Merry</div>
           <div class="tier-tagline">Bright + aerial reel</div>
           <p class="tier-desc">
@@ -920,6 +1017,9 @@
         <p class="section-eyebrow">The process</p>
         <h2 class="section-title" id="how-title">Simple from start to finish.</h2>
         <p class="section-sub">Six steps and you're done for the season. Matthew handles everything — all you do is show up for the reveal.</p>
+      </div>
+      <div class="how-img-wrap">
+        <img src="images/installer.png" alt="Professional installer placing warm white Christmas lights along a roofline" loading="lazy" />
       </div>
       <div class="steps" role="list">
         <div class="step" role="listitem">
@@ -975,15 +1075,16 @@
       <div>
         <p class="section-eyebrow">The Hearthglow standard</p>
         <h2 class="section-title">The Reveal.</h2>
-        <p class="section-sub" style="margin-bottom:0">Every Hearthglow install ends the same way — with Matthew inviting you outside for the first look at your home lit up. It's the moment the whole job is built around.</p>
-      </div>
-      <div>
+        <p class="section-sub">Every Hearthglow install ends the same way — with Matthew inviting you outside for the first look at your home lit up. It's the moment the whole job is built around.</p>
         <p class="reveal-quote">
           "We're all finished. Would you like to come outside<br/>and take a <em>look</em>?"
         </p>
         <blockquote>
           The Reveal is the last act of every Hearthglow job, without exception. It's not a formality — it's why the work matters.
         </blockquote>
+      </div>
+      <div>
+        <img src="images/reveal-couple.png" alt="A couple standing in their snowy front yard, looking up at their home lit with warm white Christmas lights" class="reveal-img" loading="lazy" />
       </div>
     </div>
   </section>
