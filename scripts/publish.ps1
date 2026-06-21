@@ -2,10 +2,16 @@
 # Uploads index.html and any files listed in $filesToUpload to public_html.
 # Uses port 2083 (no SSH required).
 
+# Load credentials from gitignored config file
+$configPath = Join-Path $PSScriptRoot "config.ps1"
+if (Test-Path $configPath) { . $configPath } else {
+    Write-Error "Missing scripts/config.ps1 — create it with: `$CPANEL_TOKEN = 'your-token'"
+    exit 1
+}
+
 $CPANEL_HOST  = "eos.canspace.ca"
 $CPANEL_PORT  = "2083"
 $CPANEL_USER  = "hearthgl"
-$CPANEL_TOKEN = "Y3BDUYVKV7JAFOJ0PJXMF94N1O1MWXR6"
 $REMOTE_DIR   = "/home/hearthgl/public_html"
 $DOMAIN       = "https://hearthglow.ca"
 

@@ -2,6 +2,7 @@
 # CRITICAL: never commit credentials or backups to a public repo
 
 scripts/config.sh
+scripts/config.ps1
 backups/
 logs/
 *.log
