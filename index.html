@@ -1172,7 +1172,8 @@
 
         <!-- FORM -->
         <form id="quoteForm"
-              action="/contact.php"
+              class="quote-form"
+              action="/api/v1/quote-intake"
               method="POST"
               novalidate>
 
@@ -1210,7 +1211,7 @@
           <div class="form-row">
             <div class="form-group">
               <label for="tier">Service tier interest</label>
-              <select id="tier" name="tier_interest">
+              <select id="tier" name="tier_interest" required>
                 <option value="" disabled selected>Not sure yet</option>
                 <option value="home">Home — labour only (I supply lights)</option>
                 <option value="bright">Bright — full supply + install</option>
@@ -1220,7 +1221,7 @@
             </div>
             <div class="form-group">
               <label for="window">Preferred install window</label>
-              <select id="window" name="install_window">
+              <select id="window" name="install_window" required>
                 <option value="" disabled selected>Select a time</option>
                 <option value="oct-early">Early October (Oct 1–15)</option>
                 <option value="oct-late">Late October (Oct 16–31)</option>
@@ -1239,6 +1240,24 @@
           <p class="form-note">
             By submitting this form you're requesting a quote — not making a booking. Matthew will reach out within 24 hours.
           </p>
+
+          <div class="form-group">
+            <label>
+              <input type="checkbox" name="consentTransactional" required />
+              <span style="display: inline; font-weight: normal;">
+                We'll send you updates about your quote — this is required to proceed
+              </span>
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label>
+              <input type="checkbox" name="consentMarketing" />
+              <span style="display: inline; font-weight: normal;">
+                May we also send you seasonal offers and exclusive promotions?
+              </span>
+            </label>
+          </div>
 
           <button type="submit" class="btn btn-primary btn-lg form-submit">
             Send Quote Request
@@ -1341,19 +1360,26 @@
       }
     })();
 
-    // ── Quote form: AJAX submit via Formspree ────────────────────
+    // ── Quote form: AJAX submit to /v1/quote-intake ──────────────
     const form    = document.getElementById('quoteForm');
     const success = document.getElementById('formSuccess');
 
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
 
-      // Basic validation
+      // ── Validation ──────────────────────────────────────────────────────────
       const required = form.querySelectorAll('[required]');
       let valid = true;
       required.forEach(field => {
         field.style.borderColor = '';
-        if (!field.value.trim()) {
+
+        // Special handling for consent checkbox
+        if (field.name === 'consentTransactional') {
+          if (!field.checked) {
+            field.style.borderColor = '#e05555';
+            valid = false;
+          }
+        } else if (!field.value.trim()) {
           field.style.borderColor = '#e05555';
           valid = false;
         }
@@ -1365,21 +1391,77 @@
       btn.disabled = true;
 
       try {
-        const res = await fetch(form.action, {
+        // ── Prepare FormData ────────────────────────────────────────────────────
+        const formData = new FormData(form);
+
+        // Convert to JSON (quote-intake expects application/json)
+        const payload = {
+          firstName:             formData.get('first_name'),
+          lastName:              formData.get('last_name'),
+          email:                 formData.get('email'),
+          phone:                 formData.get('phone') || null,
+          address:               formData.get('address'),
+          tierInterest:          formData.get('tier_interest'),
+          installWindow:         formData.get('install_window'),
+          notes:                 formData.get('notes') || null,
+          consentTransactional:  formData.get('consentTransactional') === 'on',
+          consentMarketing:      formData.get('consentMarketing') === 'on',
+        };
+
+        // ── POST to quote-intake ────────────────────────────────────────────────
+        const res = await fetch('/api/v1/quote-intake', {
           method: 'POST',
-          body: new FormData(form),
-          headers: { 'Accept': 'application/json' }
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify(payload),
         });
 
         if (res.ok) {
+          const data = await res.json();
+
+          // ── Success handling ──────────────────────────────────────────────────
           form.style.display = 'none';
           success.style.display = 'block';
+
+          // Optional: log for debugging
+          console.log('Quote intake submitted:', {
+            customerId: data.data.customerId,
+            sessionToken: data.data.sessionToken,
+            zoneCheckResult: data.data.zoneCheckResult,
+          });
+
+          // Optional: if out_of_zone, show waitlist message in success block
+          if (data.data.zoneCheckResult === 'out_of_zone') {
+            const successMsg = success.querySelector('p') || success;
+            successMsg.innerHTML +=
+              '<p style="margin-top: 1rem; color: var(--muted);">' +
+              'You\'re outside our current service area, but we\'re interested in expanding there. ' +
+              'We\'ll contact you about joining our waitlist.</p>';
+          }
         } else {
+          // ── Error handling ────────────────────────────────────────────────────
+          const errorData = await res.json().catch(() => ({}));
+
+          // Show field-level errors if present
+          if (errorData.error?.field_errors) {
+            errorData.error.field_errors.forEach(err => {
+              const fieldName = err.field.split('[')[0]; // e.g. "email" from "email"
+              const field = form.querySelector(`[name="${fieldName}"]`);
+              if (field) field.style.borderColor = '#e05555';
+            });
+          }
+
+          // Show error message
+          const message = errorData.error?.message || 'Something went wrong. Please try again.';
+          alert(message + '\n\nIf the problem persists, email matt@hearthglow.ca directly.');
+
           btn.textContent = 'Send Quote Request';
           btn.disabled = false;
-          alert('Something went wrong. Please email matt@hearthglow.ca directly.');
         }
-      } catch {
+      } catch (err) {
+        console.error('Network error:', err);
         btn.textContent = 'Send Quote Request';
         btn.disabled = false;
         alert('Network error. Please email matt@hearthglow.ca directly.');
