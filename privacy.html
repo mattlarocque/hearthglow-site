@@ -26,6 +26,7 @@
     ul { padding-left: 22px; margin-bottom: 12px; }
     a { color: var(--navy); }
     .meta { color: var(--muted); font-style: italic; margin-bottom: 28px; }
+    .hold-banner { background: #fdecea; border-left: 4px solid #b00020; padding: 14px 18px; margin-bottom: 28px; font-size: 0.95rem; color: #7a0014; }
     .contact-card { background: #fff; border: 1px solid var(--line); border-top: 4px solid var(--gold); border-radius: 8px; padding: 24px; margin-top: 28px; }
     footer { border-top: 1px solid var(--line); padding: 24px; text-align: center; color: var(--muted); font-size: 0.85rem; }
   </style>
@@ -36,6 +37,19 @@
   </header>
 
   <main>
+    <!-- DO NOT PUBLISH until the §5 subcontractor job-card portal + automatic
+         access-revocation-on-completion are actually built, OR §5 is reworded to
+         future tense and re-approved by counsel. As of now those controls do not
+         exist in the platform (subcontractors are used only for zone-check math),
+         so §5 asserts safeguards that are not yet enforced. Remove this banner +
+         set the dates before going live. (Layer 11 PIPEDA prerequisite D-L11-03 #2) -->
+    <div class="hold-banner">
+      <strong>DO NOT PUBLISH — internal hold.</strong> Section&nbsp;5 describes a subcontractor
+      job-card portal and automatic access removal that are <strong>not yet built</strong>. Hold
+      publication until that feature ships (or §5 is reworded to future tense and re-approved). Remove
+      this banner and set the effective/last-updated dates before going live.
+    </div>
+
     <h1>Privacy Notice</h1>
     <p class="meta">
       Effective date: [set on publish] &middot; Last updated: [set on publish] &middot;
