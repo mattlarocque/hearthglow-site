@@ -1418,45 +1418,60 @@
           body: JSON.stringify(payload),
         });
 
-        if (res.ok) {
+        if (res.status === 201) {
           const data = await res.json();
+          const sessionToken = data.data && data.data.sessionToken;
 
-          // ── Success handling ──────────────────────────────────────────────────
+          // Best-effort, fire-and-forget notification so Matt still gets pinged.
+          // Failure here must NOT block the customer's redirect.
+          try {
+            fetch('/contact.php', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+              keepalive: true,
+            }).catch(() => {});
+          } catch (_) { /* ignore */ }
+
+          // ── 201 → continue into the quote flow ────────────────────────────────
+          if (sessionToken) {
+            window.location.href =
+              'https://app.hearthglow.ca/quote/start?token=' + encodeURIComponent(sessionToken);
+            return;
+          }
+
+          // Fallback: no token returned — show the success panel rather than stall.
           form.style.display = 'none';
           success.style.display = 'block';
-
-          // Optional: log for debugging
-          console.log('Quote intake submitted:', {
-            customerId: data.data.customerId,
-            sessionToken: data.data.sessionToken,
-            zoneCheckResult: data.data.zoneCheckResult,
-          });
-
-          // Optional: if out_of_zone, show waitlist message in success block
-          if (data.data.zoneCheckResult === 'out_of_zone') {
+          if (data.data && data.data.zoneCheckResult === 'out_of_zone') {
             const successMsg = success.querySelector('p') || success;
             successMsg.innerHTML +=
               '<p style="margin-top: 1rem; color: var(--muted);">' +
               'You\'re outside our current service area, but we\'re interested in expanding there. ' +
               'We\'ll contact you about joining our waitlist.</p>';
           }
-        } else {
-          // ── Error handling ────────────────────────────────────────────────────
+        } else if (res.status === 409) {
+          // ── 409 → duplicate request ───────────────────────────────────────────
+          alert('We already have a request from this email — we\'ll be in touch.');
+          btn.textContent = 'Send Quote Request';
+          btn.disabled = false;
+        } else if (res.status === 422 || res.status === 400) {
+          // ── 422/400 → surface field errors ────────────────────────────────────
           const errorData = await res.json().catch(() => ({}));
-
-          // Show field-level errors if present
           if (errorData.error?.field_errors) {
             errorData.error.field_errors.forEach(err => {
-              const fieldName = err.field.split('[')[0]; // e.g. "email" from "email"
+              const fieldName = err.field.split('[')[0];
               const field = form.querySelector(`[name="${fieldName}"]`);
               if (field) field.style.borderColor = '#e05555';
             });
           }
-
-          // Show error message
-          const message = errorData.error?.message || 'Something went wrong. Please try again.';
-          alert(message + '\n\nIf the problem persists, email matt@hearthglow.ca directly.');
-
+          const message = errorData.error?.message || 'Please check the highlighted fields and try again.';
+          alert(message);
+          btn.textContent = 'Send Quote Request';
+          btn.disabled = false;
+        } else {
+          // ── Any other status → generic ────────────────────────────────────────
+          alert('Something went wrong — please try again or email matt@hearthglow.ca.');
           btn.textContent = 'Send Quote Request';
           btn.disabled = false;
         }
