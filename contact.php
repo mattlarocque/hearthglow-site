@@ -35,6 +35,28 @@ if (!empty($origin) && !in_array($origin, [SITE_URL, 'https://www.' . parse_url(
     exit;
 }
 
+// ── Accept JSON body (landing form posts application/json) ─────────────────────
+// The landing form submits the intake directly to the API (/api/v1/quote-intake)
+// and then fires a best-effort, fire-and-forget notification POST here so Matt
+// still gets pinged. We normalise the camelCase JSON into the snake_case fields
+// the rest of this handler already expects.
+$raw_input = file_get_contents('php://input');
+if (!empty($raw_input)) {
+    $json = json_decode($raw_input, true);
+    if (is_array($json)) {
+        $_POST = array_merge($_POST, [
+            'first_name'     => $json['firstName']     ?? $json['first_name']     ?? '',
+            'last_name'      => $json['lastName']      ?? $json['last_name']      ?? '',
+            'email'          => $json['email']         ?? '',
+            'phone'          => $json['phone']         ?? '',
+            'address'        => $json['address']       ?? '',
+            'tier_interest'  => $json['tierInterest']  ?? $json['tier_interest']  ?? '',
+            'install_window' => $json['installWindow'] ?? $json['install_window'] ?? '',
+            'notes'          => $json['notes']         ?? '',
+        ]);
+    }
+}
+
 // ── Rate limiting ─────────────────────────────────────────────────────────────
 function check_rate_limit(string $ip): bool {
     $data = [];
