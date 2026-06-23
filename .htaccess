@@ -11,6 +11,31 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
 
+# ── Reverse proxy: /api/* → Fastify API (api.hearthglow.ca) ───────────────────
+# The landing form posts to /api/v1/quote-intake; the API serves /v1/quote-intake,
+# so we strip the leading "api/". This keeps the public quote intake same-origin
+# (no CORS, no exposed API host) per the Layer 10 deploy topology.
+#
+# REQUIRES mod_proxy + mod_proxy_http, and (because the backend is HTTPS)
+# SSLProxyEngine — which on shared hosting usually must be enabled at the vhost
+# level, NOT in .htaccess. If the proxied request returns 500 / "is not allowed"
+# / "SSLProxyEngine required", open a CanSpace ticket asking them to:
+#   1. enable mod_proxy + mod_proxy_http for hearthglow.ca, and
+#   2. add  "SSLProxyEngine On"  to the hearthglow.ca vhost.
+# Until then, see the FALLBACK note below.
+<IfModule mod_proxy.c>
+  # If your plan allows it in .htaccess, this turns on TLS for the proxied leg.
+  # If Apache rejects it here, remove this line and have CanSpace set it in the vhost.
+  SSLProxyEngine On
+  # /api/v1/quote-intake  →  https://api.hearthglow.ca/v1/quote-intake
+  RewriteRule ^api/(.*)$ https://api.hearthglow.ca/$1 [P,L]
+</IfModule>
+#
+# FALLBACK (if CanSpace cannot enable proxying): point the landing form's fetch()
+# directly at https://api.hearthglow.ca/v1/quote-intake instead of /api/..., and
+# set WEB_ORIGIN=https://hearthglow.ca on the API so @fastify/cors allows it.
+# (The API already enables CORS with credentials from WEB_ORIGIN.)
+
 # ── Security headers ──────────────────────────────────────────────────────────
 <IfModule mod_headers.c>
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
